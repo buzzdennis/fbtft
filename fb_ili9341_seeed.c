@@ -1,5 +1,5 @@
 /*
- * FB driver for the ILI9341 LCD display controller
+ * FB driver for the ILI9341 LCD display controller Seeed Studio TFT LCD
  *
  * This display uses 9-bit SPI: Data/Command bit + 8 data bits
  * For platforms that doesn't support 9-bit, the driver is capable
@@ -31,7 +31,7 @@
 
 #include "fbtft.h"
 
-#define DRVNAME		"fb_ili9341"
+#define DRVNAME		"fb_ili9341_seeed"
 #define WIDTH		240
 #define HEIGHT		320
 #define TXBUFLEN	(4 * PAGE_SIZE)
