@@ -35,8 +35,8 @@
 #define WIDTH		240
 #define HEIGHT		320
 #define TXBUFLEN	(4 * PAGE_SIZE)
-#define DEFAULT_GAMMA	"1F 1A 18 0A 0F 06 45 87 32 0A 07 02 07 05 00\n" \
-			"00 25 27 05 10 09 3A 78 4D 05 18 0D 38 3A 1F"
+#define DEFAULT_GAMMA	"0F 2A 28 08 0E 08 54 A9 43 0A 0F 00 00 00 00\n" \
+			"00 15 17 07 11 06 2B 56 3C 05 10 0F 3F 3F 0F"
 
 
 static int init_display(struct fbtft_par *par)
@@ -48,30 +48,31 @@ static int init_display(struct fbtft_par *par)
 	/* startup sequence for MI0283QT-9A */
 	write_reg(par, 0x01); /* software reset */
 	mdelay(5);
-	write_reg(par, 0x28); /* display off */
+	/* write_reg(par, 0x28); */ /* display off */
 	/* --------------------------------------------------------- */
-	write_reg(par, 0xCF, 0x00, 0x83, 0x30);
-	write_reg(par, 0xED, 0x64, 0x03, 0x12, 0x81);
-	write_reg(par, 0xE8, 0x85, 0x01, 0x79);
+	write_reg(par, 0xCF, 0x00, 0x8B, 0x30);
+	write_reg(par, 0xED, 0x67, 0x03, 0x12, 0x81);
+	write_reg(par, 0xE8, 0x85, 0x10, 0x7A);
 	write_reg(par, 0xCB, 0x39, 0X2C, 0x00, 0x34, 0x02);
 	write_reg(par, 0xF7, 0x20);
 	write_reg(par, 0xEA, 0x00, 0x00);
 	/* ------------power control-------------------------------- */
-	write_reg(par, 0xC0, 0x26);
-	write_reg(par, 0xC1, 0x11);
+	write_reg(par, 0xC0, 0x1B);
+	write_reg(par, 0xC1, 0x10);
 	/* ------------VCOM --------- */
-	write_reg(par, 0xC5, 0x35, 0x3E);
-	write_reg(par, 0xC7, 0xBE);
+	write_reg(par, 0xC5, 0x3F, 0x3C);
+	write_reg(par, 0xC7, 0xB7);
 	/* ------------memory access control------------------------ */
-	write_reg(par, 0x3A, 0x55); /* 16bit pixel */
+	write_reg(par, 0x36, 0x08);
+	write_reg(par, 0x3A, 0x55);
 	/* ------------frame rate----------------------------------- */
 	write_reg(par, 0xB1, 0x00, 0x1B);
+	/* ------------display function control--------------------- */
+	write_reg(par, 0xB6, 0x0A, 0xA2);
 	/* ------------Gamma---------------------------------------- */
-	/* write_reg(par, 0xF2, 0x08); */ /* Gamma Function Disable */
-	write_reg(par, 0x26, 0x01);
+	write_reg(par, 0xF2, 0x00); /* Gamma Function Disable */
+	write_reg(par, 0x26, 0x01); /* Gamma Curve selected */
 	/* ------------display-------------------------------------- */
-	write_reg(par, 0xB7, 0x07); /* entry mode set */
-	write_reg(par, 0xB6, 0x0A, 0x82, 0x27, 0x00);
 	write_reg(par, 0x11); /* sleep out */
 	mdelay(100);
 	write_reg(par, 0x29); /* display on */
