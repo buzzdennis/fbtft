@@ -45,7 +45,7 @@ static int init_display(struct fbtft_par *par)
 
 	par->fbtftops.reset(par);
 
-	/* startup sequence for MI0283QT-9A */
+	/* startup sequence for SeeedStudio 2.8 TFT LCDv2.0*/
 	write_reg(par, 0x01); /* software reset */
 	mdelay(5);
 	/* write_reg(par, 0x28); */ /* display off */
